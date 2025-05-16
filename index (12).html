@@ -1,0 +1,1132 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Charity Donation System
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: "Inter", sans-serif;
+    }
+   #charity-center-image-preview {
+     max-width: 100%;
+     max-height: 200px;
+     object-fit: contain;
+     border-radius: 0.375rem; /* rounded-md */
+     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     margin-top: 0.5rem;
+   }
+  </style>
+ </head>
+ <body class="bg-gray-50 min-h-screen flex flex-col">
+  <header class="bg-white shadow-md sticky top-0 z-50">
+   <nav aria-label="Primary Navigation" class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <a aria-label="CharityConnect Home" class="text-2xl font-bold text-indigo-600" href="#">
+     <marquee behavior="" direction="">Donors and charity centers connector</marquee> 
+    </a>
+    <ul class="hidden md:flex space-x-6 font-semibold text-gray-700" role="menubar">
+     <li role="none">
+      <a class="nav-link hover:text-indigo-600" data-page="home" href="#" role="menuitem" tabindex="0">
+       Home
+      </a>
+     </li>
+     <li role="none">
+      <a class="nav-link hover:text-indigo-600" data-page="donate" href="#" role="menuitem" tabindex="-1">
+       Donate
+      </a>
+     </li>
+     <li role="none">
+      <a class="nav-link hover:text-indigo-600" data-page="events" href="#" role="menuitem" tabindex="-1">
+       Events
+      </a>
+     </li>
+     <li role="none">
+      <a class="nav-link hover:text-indigo-600" data-page="reports" href="#" role="menuitem" tabindex="-1">
+       Reports
+      </a>
+     </li>
+     <li role="none">
+      <a class="nav-link hover:text-indigo-600" data-page="admin" href="#" role="menuitem" tabindex="-1">
+       Admin
+      </a>
+     </li>
+     <li role="none">
+      <a class="nav-link hover:text-indigo-600" data-page="account" href="#" role="menuitem" tabindex="-1">
+       Account
+      </a>
+     </li>
+    </ul>
+    <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu" class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+     <i class="fas fa-bars fa-lg">
+     </i>
+    </button>
+   </nav>
+   <div aria-label="Mobile Navigation" class="hidden md:hidden bg-white shadow-md" id="mobile-menu" role="menu">
+    <ul class="flex flex-col space-y-2 p-4 font-semibold text-gray-700">
+     <li>
+      <a class="nav-link block hover:text-indigo-600" data-page="home" href="#" role="menuitem" tabindex="-1">
+       Home
+      </a>
+     </li>
+     <li>
+      <a class="nav-link block hover:text-indigo-600" data-page="donate" href="#" role="menuitem" tabindex="-1">
+       Donate
+      </a>
+     </li>
+     <li>
+      <a class="nav-link block hover:text-indigo-600" data-page="events" href="#" role="menuitem" tabindex="-1">
+       Events
+      </a>
+     </li>
+     <li>
+      <a class="nav-link block hover:text-indigo-600" data-page="reports" href="#" role="menuitem" tabindex="-1">
+       Reports
+      </a>
+     </li>
+     <li>
+      <a class="nav-link block hover:text-indigo-600" data-page="admin" href="#" role="menuitem" tabindex="-1">
+       Admin
+      </a>
+     </li>
+     <li>
+      <a class="nav-link block hover:text-indigo-600" data-page="account" href="#" role="menuitem" tabindex="-1">
+       Account
+      </a>
+     </li>
+    </ul>
+   </div>
+  </header>
+  <main class="flex-grow container mx-auto px-4 py-8" id="main-content" tabindex="-1">
+   <!-- Home Page -->
+   <section aria-labelledby="home-title" class="page-content" id="page-home" role="region">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6" id="home-title">
+     Welcome to CharityConnect
+    </h1>
+    <p class="mb-4 text-gray-700 max-w-3xl">
+     Connect with local charity centers and make a difference by donating money or goods.
+        Our system ensures your donations reach the right place and provides confirmation and reports.
+    </p>
+    <img alt="A group of diverse volunteers happily helping and distributing goods to people in need in a community center" class="rounded-lg shadow-md w-full max-w-4xl" height="300" src="https://storage.googleapis.com/a1aa/image/77b491ad-fc2d-4fa3-a997-10f3f2d70b3b.jpg" width="600"/>
+   </section>
+   <!-- Donate Page -->
+   <section aria-labelledby="donate-title" class="page-content hidden" id="page-donate" role="region">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6" id="donate-title">
+     Make a Donation
+    </h1>
+    <form aria-describedby="donation-desc" class="max-w-3xl bg-white p-6 rounded-lg shadow-md space-y-6" id="donation-form">
+     <p class="sr-only" id="donation-desc">
+      Form to make a donation by selecting type, entering details, and location.
+     </p>
+     <div>
+      <label class="block font-semibold mb-1" for="donation-type">
+       Donation Type
+      </label>
+      <select aria-required="true" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="donation-type" name="donationType" required="">
+       <option disabled="" selected="" value="">
+        Select donation type
+       </option>
+       <option value="money">
+        Money (TZ Shillings)
+       </option>
+       <option value="goods">
+        Goods
+       </option>
+      </select>
+     </div>
+     <div class="hidden space-y-4" id="money-donation-fields">
+      <label class="block font-semibold mb-1" for="amount">
+       Amount (TZS)
+      </label>
+      <input aria-describedby="amount-desc" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="amount" min="1" name="amount" placeholder="Enter amount in Tanzanian Shillings" type="number"/>
+      <p class="text-sm text-gray-500" id="amount-desc">
+       Enter the amount you want to donate in Tanzanian Shillings.
+      </p>
+      <label class="block font-semibold mb-1">
+       Payment Method
+      </label>
+      <div aria-label="Payment Method" class="flex flex-wrap gap-4" role="radiogroup">
+       <label class="inline-flex items-center cursor-pointer">
+        <input aria-checked="false" class="form-radio text-indigo-600" name="paymentMethod" type="radio" value="lipa_namba_mpesa"/>
+        <span class="ml-2">
+         Lipa Namba Mpesa
+        </span>
+       </label>
+       <label class="inline-flex items-center cursor-pointer">
+        <input aria-checked="false" class="form-radio text-indigo-600" name="paymentMethod" type="radio" value="mpesa"/>
+        <span class="ml-2">
+         Mpesa
+        </span>
+       </label>
+       <label class="inline-flex items-center cursor-pointer">
+        <input aria-checked="false" class="form-radio text-indigo-600" name="paymentMethod" type="radio" value="halopesa"/>
+        <span class="ml-2">
+         Halopesa
+        </span>
+       </label>
+       <label class="inline-flex items-center cursor-pointer">
+        <input aria-checked="false" class="form-radio text-indigo-600" name="paymentMethod" type="radio" value="yas"/>
+        <span class="ml-2">
+         Yas
+        </span>
+       </label>
+       <label class="inline-flex items-center cursor-pointer">
+        <input aria-checked="false" class="form-radio text-indigo-600" name="paymentMethod" type="radio" value="airtelmoney"/>
+        <span class="ml-2">
+         Airtel Money
+        </span>
+       </label>
+      </div>
+     </div>
+     <div class="hidden space-y-4" id="goods-donation-fields">
+      <label class="block font-semibold mb-1" for="goods-description">
+       Goods Description
+      </label>
+      <textarea aria-describedby="goods-desc" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="goods-description" name="goodsDescription" placeholder="Describe the goods you want to donate" rows="4"></textarea>
+      <p class="text-sm text-gray-500" id="goods-desc">
+       Describe the goods you want to donate.
+      </p>
+      <label class="block font-semibold mb-1" for="goods-quantity">
+       Quantity
+      </label>
+      <input aria-describedby="goods-qty-desc" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="goods-quantity" min="1" name="goodsQuantity" placeholder="Enter quantity" type="number"/>
+      <p class="text-sm text-gray-500" id="goods-qty-desc">
+       Enter the quantity of goods you want to donate.
+      </p>
+     </div>
+     <div>
+      <label class="block font-semibold mb-1" for="location">
+       Your Location (for matching nearby charity centers)
+      </label>
+      <input aria-required="true" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="location" name="location" placeholder="Enter your location or address" required="" type="text"/>
+     </div>
+     <button aria-label="Submit Donation" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition" type="submit">
+      Submit Donation
+     </button>
+    </form>
+    <div aria-live="polite" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md max-w-3xl" id="donation-confirmation" role="alert">
+    </div>
+   </section>
+   <!-- Events Page -->
+   <section aria-labelledby="events-title" class="page-content hidden" id="page-events" role="region">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6" id="events-title">
+     Upcoming Events
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
+     <article aria-label="Charity Run 2024 event" class="bg-white rounded-lg shadow-md p-6" tabindex="0">
+      <img alt="Volunteers participating in a charity run event in a city park with banners and cheering crowd" class="rounded-md mb-4 w-full" height="300" src="https://storage.googleapis.com/a1aa/image/06c49d4d-177d-49e9-ed2f-a5d58f1ba4e8.jpg" width="600"/>
+      <h2 class="text-xl font-semibold mb-2">
+       Charity Run 2024
+      </h2>
+      <p class="text-gray-700 mb-2">
+       Join us for a 5K run to raise funds for local orphanages.
+      </p>
+      <p class="text-sm text-gray-500">
+       Date: July 15, 2024
+      </p>
+      <p class="text-sm text-gray-500">
+       Location: Dar es Salaam City Park
+      </p>
+     </article>
+     <article aria-label="Community Food Drive event" class="bg-white rounded-lg shadow-md p-6" tabindex="0">
+      <img alt="Volunteers packing food parcels for distribution during a community food drive event in a warehouse" class="rounded-md mb-4 w-full" height="300" src="https://storage.googleapis.com/a1aa/image/038eac5b-5e72-4f7e-9f45-0dc2a584f8d3.jpg" width="600"/>
+      <h2 class="text-xl font-semibold mb-2">
+       Community Food Drive
+      </h2>
+      <p class="text-gray-700 mb-2">
+       Help us collect and distribute food to families in need.
+      </p>
+      <p class="text-sm text-gray-500">
+       Date: August 10, 2024
+      </p>
+      <p class="text-sm text-gray-500">
+       Location: Mwanza Community Center
+      </p>
+     </article>
+     <article aria-label="Clothing Donation Drive event" class="bg-white rounded-lg shadow-md p-6" tabindex="0">
+      <img alt="Volunteers sorting and packing clothes for donation during a clothing drive event in a community hall" class="rounded-md mb-4 w-full" height="300" src="https://storage.googleapis.com/a1aa/image/bc8da21d-1513-4cbe-c374-c722d9817693.jpg" width="600"/>
+      <h2 class="text-xl font-semibold mb-2">
+       Clothing Donation Drive
+      </h2>
+      <p class="text-gray-700 mb-2">
+       Donate clothes to help those affected by recent floods.
+      </p>
+      <p class="text-sm text-gray-500">
+       Date: September 5, 2024
+      </p>
+      <p class="text-sm text-gray-500">
+       Location: Arusha Community Hall
+      </p>
+     </article>
+     <article aria-label="Free Health Camp event" class="bg-white rounded-lg shadow-md p-6" tabindex="0">
+      <img alt="Medical professionals providing free health checkups during a charity health camp event in a rural village" class="rounded-md mb-4 w-full" height="300" src="https://storage.googleapis.com/a1aa/image/445c83d0-8358-4677-b65f-c80d7ab5b47f.jpg" width="600"/>
+      <h2 class="text-xl font-semibold mb-2">
+       Free Health Camp
+      </h2>
+      <p class="text-gray-700 mb-2">
+       Offering free medical checkups and medicines to underserved communities.
+      </p>
+      <p class="text-sm text-gray-500">
+       Date: October 20, 2024
+      </p>
+      <p class="text-sm text-gray-500">
+       Location: Kigoma Rural Clinic
+      </p>
+     </article>
+    </div>
+   </section>
+   <!-- Reports Page -->
+   <section aria-labelledby="reports-title" class="page-content hidden" id="page-reports" role="region">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6" id="reports-title">
+     Donation Reports
+    </h1>
+    <div class="overflow-x-auto max-w-6xl bg-white rounded-lg shadow-md p-6">
+     <table aria-describedby="reports-desc" class="min-w-full table-auto border-collapse border border-gray-300">
+      <caption class="sr-only" id="reports-desc">
+       Table showing donation reports including donation ID, user, type,
+            amount or goods, charity center, status, and date.
+      </caption>
+      <thead>
+       <tr class="bg-indigo-100 text-indigo-700 font-semibold">
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         Donation ID
+        </th>
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         User
+        </th>
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         Type
+        </th>
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         Amount / Goods
+        </th>
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         Charity Center
+        </th>
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         Status
+        </th>
+        <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+         Date
+        </th>
+       </tr>
+      </thead>
+      <tbody class="text-gray-700" id="reports-table-body">
+       <!-- Filled dynamically -->
+      </tbody>
+     </table>
+    </div>
+   </section>
+   <!-- Admin Page -->
+   <section aria-labelledby="admin-title" class="page-content hidden max-w-6xl mx-auto" id="page-admin" role="region">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6" id="admin-title">
+     Admin Panel
+    </h1>
+    <!-- Admin Login -->
+    <div class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto" id="admin-login-section">
+     <h2 class="text-xl font-semibold mb-4">
+      Admin Login
+     </h2>
+     <form aria-describedby="admin-login-desc" class="space-y-4" id="admin-login-form">
+      <p class="sr-only" id="admin-login-desc">
+       Admin login form requiring username and password.
+      </p>
+      <div>
+       <label class="block font-semibold mb-1" for="admin-username">
+        Username
+       </label>
+       <input aria-required="true" autocomplete="username" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="admin-username" name="adminUsername" required="" type="text"/>
+      </div>
+      <div>
+       <label class="block font-semibold mb-1" for="admin-password">
+        Password
+       </label>
+       <input aria-required="true" autocomplete="current-password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="admin-password" name="adminPassword" required="" type="password"/>
+      </div>
+      <button aria-label="Admin Login" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition w-full" type="submit">
+       Login
+      </button>
+     </form>
+     <div aria-live="assertive" class="hidden mt-3 text-red-600 font-semibold" id="admin-login-error" role="alert">
+     </div>
+    </div>
+    <!-- Admin Dashboard -->
+    <div class="hidden mt-8 space-y-8" id="admin-dashboard">
+     <!-- Register Charity Center -->
+     <section aria-labelledby="register-center-title" class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4" id="register-center-title">
+       Register Charity Center
+      </h2>
+      <form aria-describedby="register-center-desc" class="space-y-4 max-w-3xl" id="register-charity-center-form" enctype="multipart/form-data">
+       <p class="sr-only" id="register-center-desc">
+        Form to register a new charity center with name, location, and image.
+       </p>
+       <div>
+        <label class="block font-semibold mb-1" for="center-name">
+         Center Name
+        </label>
+        <input aria-required="true" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="center-name" name="centerName" required="" type="text"/>
+       </div>
+       <div>
+        <label class="block font-semibold mb-1" for="center-location">
+         Location
+        </label>
+        <input aria-required="true" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="center-location" name="centerLocation" required="" type="text"/>
+       </div>
+       <div>
+        <label class="block font-semibold mb-1" for="center-image">
+         Charity Center Image
+        </label>
+        <input accept="image/*" aria-describedby="image-desc" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="center-image" name="centerImage" type="file"/>
+        <p class="text-sm text-gray-500" id="image-desc">
+         Upload an image representing the charity center (optional).
+        </p>
+        <img alt="Preview of charity center image" class="hidden" id="charity-center-image-preview" src="#"/>
+       </div>
+       <button aria-label="Register Charity Center" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition" type="submit">
+        Register Center
+       </button>
+      </form>
+      <div aria-live="polite" class="hidden mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md max-w-3xl" id="register-center-confirmation" role="alert">
+      </div>
+     </section>
+     <!-- View Donations -->
+     <section aria-labelledby="view-donations-title" class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4" id="view-donations-title">
+       View Donations
+      </h2>
+      <div class="overflow-x-auto max-w-full">
+       <table aria-describedby="admin-donations-desc" class="min-w-full table-auto border-collapse border border-gray-300">
+        <caption class="sr-only" id="admin-donations-desc">
+         Table showing all donations with ability to update status.
+        </caption>
+        <thead>
+         <tr class="bg-indigo-100 text-indigo-700 font-semibold">
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Donation ID
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           User
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Type
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Amount / Goods
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Charity Center
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Status
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Date
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Update Status
+          </th>
+         </tr>
+        </thead>
+        <tbody class="text-gray-700" id="admin-donations-table-body">
+         <!-- Filled dynamically -->
+        </tbody>
+       </table>
+      </div>
+      <button aria-label="Save Donation Updates" class="mt-4 bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition" id="save-donation-updates">
+       Save Updates
+      </button>
+      <div aria-live="polite" class="hidden mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md max-w-3xl" id="admin-update-confirmation" role="alert">
+      </div>
+     </section>
+    </div>
+   </section>
+   <!-- Account Page -->
+   <section aria-labelledby="account-title" class="page-content hidden max-w-3xl mx-auto" id="page-account" role="region">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-6" id="account-title">
+     User Account
+    </h1>
+    <!-- User Registration -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8" id="user-registration-section">
+     <h2 class="text-2xl font-semibold mb-4">
+      Create Account
+     </h2>
+     <form aria-describedby="registration-desc" class="space-y-4" id="user-registration-form">
+      <p class="sr-only" id="registration-desc">
+       Form to create a new user account with username and password.
+      </p>
+      <div>
+       <label class="block font-semibold mb-1" for="reg-username">
+        Username
+       </label>
+       <input aria-required="true" autocomplete="username" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="reg-username" name="regUsername" required="" type="text"/>
+      </div>
+      <div>
+       <label class="block font-semibold mb-1" for="reg-password">
+        Password
+       </label>
+       <input aria-required="true" autocomplete="new-password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="reg-password" name="regPassword" required="" type="password"/>
+      </div>
+      <button aria-label="Register Account" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition w-full" type="submit">
+       Register
+      </button>
+     </form>
+     <div aria-live="polite" class="hidden mt-3 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md" id="registration-confirmation" role="alert">
+     </div>
+    </div>
+    <!-- User Login -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8" id="user-login-section">
+     <h2 class="text-2xl font-semibold mb-4">
+      User Login
+     </h2>
+     <form aria-describedby="login-desc" class="space-y-4" id="user-login-form">
+      <p class="sr-only" id="login-desc">
+       Form to login to user account with username and password.
+      </p>
+      <div>
+       <label class="block font-semibold mb-1" for="login-username">
+        Username
+       </label>
+       <input aria-required="true" autocomplete="username" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="login-username" name="loginUsername" required="" type="text"/>
+      </div>
+      <div>
+       <label class="block font-semibold mb-1" for="login-password">
+        Password
+       </label>
+       <input aria-required="true" autocomplete="current-password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="login-password" name="loginPassword" required="" type="password"/>
+      </div>
+      <button aria-label="User Login" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition w-full" type="submit">
+       Login
+      </button>
+     </form>
+     <div aria-live="assertive" class="hidden mt-3 text-red-600 font-semibold" id="login-error" role="alert">
+     </div>
+    </div>
+    <!-- User Dashboard -->
+    <div aria-atomic="true" aria-live="polite" class="hidden space-y-8" id="user-dashboard">
+     <h2 class="text-2xl font-semibold">
+      Welcome,
+      <span id="user-display-name">
+      </span>
+     </h2>
+     <section aria-labelledby="user-donations-title" class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-xl font-semibold mb-4" id="user-donations-title">
+       Your Donations
+      </h3>
+      <div class="overflow-x-auto max-w-full">
+       <table aria-describedby="user-donations-desc" class="min-w-full table-auto border-collapse border border-gray-300">
+        <caption class="sr-only" id="user-donations-desc">
+         Table showing your donations with ability to update status.
+        </caption>
+        <thead>
+         <tr class="bg-indigo-100 text-indigo-700 font-semibold">
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Donation ID
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Type
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Amount / Goods
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Charity Center
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Status
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Date
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left" scope="col">
+           Update
+          </th>
+         </tr>
+        </thead>
+        <tbody class="text-gray-700" id="user-donations-table-body">
+         <!-- Filled dynamically -->
+        </tbody>
+       </table>
+      </div>
+      <button aria-label="Save Donation Updates" class="mt-4 bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-indigo-700 transition" id="save-user-donation-updates">
+       Save Donation Updates
+      </button>
+      <div aria-live="polite" class="hidden mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md max-w-3xl" id="user-update-confirmation" role="alert">
+      </div>
+     </section>
+    </div>
+   </section>
+  </main>
+  <footer class="bg-white border-t border-gray-200 py-6 mt-auto">
+   <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+    © 2024 CharityConnect. All rights reserved.
+   </div>
+  </footer>
+  <script>
+   // Mobile menu toggle
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    mobileMenuButton.addEventListener("click", () => {
+      const expanded = mobileMenuButton.getAttribute("aria-expanded") === "true";
+      mobileMenuButton.setAttribute("aria-expanded", !expanded);
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    // Page navigation
+    const navLinks = document.querySelectorAll(".nav-link");
+    const pages = document.querySelectorAll(".page-content");
+    const mainContent = document.getElementById("main-content");
+
+    function showPage(pageId) {
+      pages.forEach((page) => {
+        if (page.id === "page-" + pageId) {
+          page.classList.remove("hidden");
+          page.setAttribute("aria-hidden", "false");
+        } else {
+          page.classList.add("hidden");
+          page.setAttribute("aria-hidden", "true");
+        }
+      });
+      if (!mobileMenu.classList.contains("hidden")) {
+        mobileMenu.classList.add("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", false);
+      }
+      mainContent.focus();
+    }
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const page = link.getAttribute("data-page");
+        showPage(page);
+      });
+    });
+
+    // Show home page by default
+    showPage("home");
+
+    // Donation form dynamic fields
+    const donationTypeSelect = document.getElementById("donation-type");
+    const moneyFields = document.getElementById("money-donation-fields");
+    const goodsFields = document.getElementById("goods-donation-fields");
+
+    donationTypeSelect.addEventListener("change", () => {
+      if (donationTypeSelect.value === "money") {
+        moneyFields.classList.remove("hidden");
+        goodsFields.classList.add("hidden");
+        moneyFields.querySelectorAll("input, select").forEach((el) => (el.required = true));
+        goodsFields.querySelectorAll("input, textarea").forEach((el) => (el.required = false));
+      } else if (donationTypeSelect.value === "goods") {
+        goodsFields.classList.remove("hidden");
+        moneyFields.classList.add("hidden");
+        goodsFields.querySelectorAll("input, textarea").forEach((el) => (el.required = true));
+        moneyFields.querySelectorAll("input, select").forEach((el) => (el.required = false));
+      } else {
+        moneyFields.classList.add("hidden");
+        goodsFields.classList.add("hidden");
+        moneyFields.querySelectorAll("input, select").forEach((el) => (el.required = false));
+        goodsFields.querySelectorAll("input, textarea").forEach((el) => (el.required = false));
+      }
+    });
+
+    // In-memory data stores (simulate backend)
+    const users = [];
+    const admins = [{ username: "admin", password: "admin123" }];
+    const charityCenters = [
+      { id: 1, name: "Dar es Salaam Center", location: "Dar es Salaam", donations: [], image: null },
+      { id: 2, name: "Mwanza Center", location: "Mwanza", donations: [], image: null },
+      { id: 3, name: "Arusha Center", location: "Arusha", donations: [], image: null },
+    ];
+    const donations = [];
+    let currentUser = null;
+    let currentAdmin = null;
+
+    // Utility: generate donation ID
+    function generateDonationId() {
+      return "DNT-" + String(donations.length + 1).padStart(3, "0");
+    }
+
+    // Utility: find nearest charity center by simple location match (case insensitive substring)
+    function findNearestCharityCenter(location) {
+      const locLower = location.toLowerCase();
+      for (const center of charityCenters) {
+        if (
+          center.location.toLowerCase().includes(locLower) ||
+          locLower.includes(center.location.toLowerCase())
+        ) {
+          return center;
+        }
+      }
+      // fallback to first center if no match
+      return charityCenters[0];
+    }
+
+    // Donation form submission
+    const donationForm = document.getElementById("donation-form");
+    const donationConfirmation = document.getElementById("donation-confirmation");
+
+    donationForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!currentUser) {
+        alert("Please login or create an account to make a donation.");
+        showPage("account");
+        return;
+      }
+
+      const donationType = donationTypeSelect.value;
+      const location = donationForm.location.value.trim();
+      if (!location) {
+        alert("Please enter your location.");
+        return;
+      }
+
+      const charityCenter = findNearestCharityCenter(location);
+
+      let donationData = {
+        id: generateDonationId(),
+        user: currentUser.username,
+        type: donationType,
+        charityCenter: charityCenter.name,
+        status: "Pending",
+        date: new Date().toISOString().split("T")[0],
+      };
+
+      if (donationType === "money") {
+        const amount = parseInt(donationForm.amount.value, 10);
+        if (isNaN(amount) || amount <= 0) {
+          alert("Please enter a valid amount.");
+          return;
+        }
+        const paymentMethod = donationForm.paymentMethod.value;
+        if (!paymentMethod) {
+          alert("Please select a payment method.");
+          return;
+        }
+        donationData.amount = amount;
+        donationData.paymentMethod = paymentMethod;
+        donationData.goodsDescription = null;
+        donationData.goodsQuantity = null;
+      } else if (donationType === "goods") {
+        const goodsDescription = donationForm.goodsDescription.value.trim();
+        const goodsQuantity = parseInt(donationForm.goodsQuantity.value, 10);
+        if (!goodsDescription) {
+          alert("Please describe the goods.");
+          return;
+        }
+        if (isNaN(goodsQuantity) || goodsQuantity <= 0) {
+          alert("Please enter a valid quantity.");
+          return;
+        }
+        donationData.amount = null;
+        donationData.paymentMethod = null;
+        donationData.goodsDescription = goodsDescription;
+        donationData.goodsQuantity = goodsQuantity;
+      } else {
+        alert("Please select a donation type.");
+        return;
+      }
+
+      donations.push(donationData);
+      charityCenter.donations.push(donationData);
+
+      donationForm.reset();
+      moneyFields.classList.add("hidden");
+      goodsFields.classList.add("hidden");
+
+      donationConfirmation.textContent = `Thank you, ${currentUser.username}! Your donation (${
+        donationData.type === "money"
+          ? donationData.amount + " TZS"
+          : donationData.goodsQuantity + " items"
+      }) has been received and matched to ${charityCenter.name}. You will receive confirmation upon acceptance.`;
+      donationConfirmation.classList.remove("hidden");
+
+      // Refresh user donations table if user dashboard visible
+      if (!document.getElementById("user-dashboard").classList.contains("hidden")) {
+        loadUserDonations();
+      }
+      // Refresh reports and admin donations if visible
+      if (!document.getElementById("page-reports").classList.contains("hidden")) {
+        loadReports();
+      }
+      if (!document.getElementById("admin-dashboard").classList.contains("hidden")) {
+        loadAdminDonations();
+      }
+    });
+
+    // User registration
+    const userRegistrationForm = document.getElementById("user-registration-form");
+    const registrationConfirmation = document.getElementById("registration-confirmation");
+
+    userRegistrationForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = userRegistrationForm.regUsername.value.trim();
+      const password = userRegistrationForm.regPassword.value;
+
+      if (users.find((u) => u.username === username)) {
+        registrationConfirmation.textContent =
+          "Username already exists. Please choose another.";
+        registrationConfirmation.classList.remove("hidden");
+        registrationConfirmation.classList.remove(
+          "bg-green-100",
+          "border-green-400",
+          "text-green-700"
+        );
+        registrationConfirmation.classList.add("bg-red-100", "border-red-400", "text-red-700");
+        return;
+      }
+
+      users.push({ username, password });
+      registrationConfirmation.textContent =
+        "Account created successfully! You can now login.";
+      registrationConfirmation.classList.remove("hidden");
+      registrationConfirmation.classList.remove("bg-red-100", "border-red-400", "text-red-700");
+      registrationConfirmation.classList.add("bg-green-100", "border-green-400", "text-green-700");
+      userRegistrationForm.reset();
+    });
+
+    // User login
+    const userLoginForm = document.getElementById("user-login-form");
+    const loginError = document.getElementById("login-error");
+    const userDashboard = document.getElementById("user-dashboard");
+    const userDisplayName = document.getElementById("user-display-name");
+    const userDonationsTableBody = document.getElementById("user-donations-table-body");
+    const userRegistrationSection = document.getElementById("user-registration-section");
+    const userLoginSection = document.getElementById("user-login-section");
+
+    userLoginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = userLoginForm.loginUsername.value.trim();
+      const password = userLoginForm.loginPassword.value;
+
+      const user = users.find((u) => u.username === username && u.password === password);
+      if (!user) {
+        loginError.textContent = "Invalid username or password.";
+        loginError.classList.remove("hidden");
+        return;
+      }
+      loginError.classList.add("hidden");
+      currentUser = user;
+      userDisplayName.textContent = currentUser.username;
+      userLoginForm.reset();
+      userRegistrationSection.classList.add("hidden");
+      userLoginSection.classList.add("hidden");
+      userDashboard.classList.remove("hidden");
+      showPage("account");
+      loadUserDonations();
+    });
+
+    // Load user donations into table
+    function loadUserDonations() {
+      userDonationsTableBody.innerHTML = "";
+      const userDonations = donations.filter((d) => d.user === currentUser.username);
+      if (userDonations.length === 0) {
+        userDonationsTableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">No donations found.</td></tr>`;
+        return;
+      }
+      userDonations.forEach((donation) => {
+        const tr = document.createElement("tr");
+        tr.classList.add("border-b", "border-gray-200");
+        tr.innerHTML = `
+          <td class="border border-gray-300 px-4 py-2">${donation.id}</td>
+          <td class="border border-gray-300 px-4 py-2">${
+            donation.type.charAt(0).toUpperCase() + donation.type.slice(1)
+          }</td>
+          <td class="border border-gray-300 px-4 py-2">${
+            donation.type === "money"
+              ? donation.amount + " TZS"
+              : donation.goodsQuantity + " items"
+          }</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.charityCenter}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.status}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.date}</td>
+          <td class="border border-gray-300 px-4 py-2">
+            <select class="border border-gray-300 rounded-md p-1 w-full user-status-select" data-donation-id="${
+              donation.id
+            }" ${donation.status === "Accepted" ? "disabled" : ""} aria-label="Update status for donation ${
+          donation.id
+        }">
+              <option value="Pending" ${
+                donation.status === "Pending" ? "selected" : ""
+              }>Pending</option>
+              <option value="Accepted" ${
+                donation.status === "Accepted" ? "selected" : ""
+              }>Accepted</option>
+              <option value="Rejected" ${
+                donation.status === "Rejected" ? "selected" : ""
+              }>Rejected</option>
+            </select>
+          </td>
+        `;
+        userDonationsTableBody.appendChild(tr);
+      });
+    }
+
+    // Save user donation updates
+    const saveUserDonationUpdatesBtn = document.getElementById("save-user-donation-updates");
+    const userUpdateConfirmation = document.getElementById("user-update-confirmation");
+
+    saveUserDonationUpdatesBtn.addEventListener("click", () => {
+      const selects = document.querySelectorAll(".user-status-select");
+      let updated = false;
+      selects.forEach((select) => {
+        const donationId = select.getAttribute("data-donation-id");
+        const donation = donations.find(
+          (d) => d.id === donationId && d.user === currentUser.username
+        );
+        if (donation && donation.status !== select.value && donation.status !== "Accepted") {
+          donation.status = select.value;
+          updated = true;
+        }
+      });
+      if (updated) {
+        userUpdateConfirmation.textContent = "Your donation statuses have been updated.";
+        userUpdateConfirmation.classList.remove("hidden");
+        loadUserDonations();
+        loadReports();
+        if (!document.getElementById("admin-dashboard").classList.contains("hidden")) {
+          loadAdminDonations();
+        }
+      } else {
+        userUpdateConfirmation.textContent = "No changes to update.";
+        userUpdateConfirmation.classList.remove("hidden");
+      }
+      setTimeout(() => {
+        userUpdateConfirmation.classList.add("hidden");
+      }, 4000);
+    });
+
+    // Admin login
+    const adminLoginForm = document.getElementById("admin-login-form");
+    const adminLoginError = document.getElementById("admin-login-error");
+    const adminLoginSection = document.getElementById("admin-login-section");
+    const adminDashboard = document.getElementById("admin-dashboard");
+    const adminDonationsTableBody = document.getElementById("admin-donations-table-body");
+    const adminUpdateConfirmation = document.getElementById("admin-update-confirmation");
+
+    adminLoginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = adminLoginForm.adminUsername.value.trim();
+      const password = adminLoginForm.adminPassword.value;
+
+      const admin = admins.find((a) => a.username === username && a.password === password);
+      if (!admin) {
+        adminLoginError.textContent = "Invalid admin username or password.";
+        adminLoginError.classList.remove("hidden");
+        return;
+      }
+      adminLoginError.classList.add("hidden");
+      currentAdmin = admin;
+      adminLoginForm.reset();
+      adminLoginSection.classList.add("hidden");
+      adminDashboard.classList.remove("hidden");
+      showPage("admin");
+      loadAdminDonations();
+    });
+
+    // Load admin donations into table
+    function loadAdminDonations() {
+      adminDonationsTableBody.innerHTML = "";
+      if (donations.length === 0) {
+        adminDonationsTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-gray-500">No donations found.</td></tr>`;
+        return;
+      }
+      donations.forEach((donation) => {
+        const tr = document.createElement("tr");
+        tr.classList.add("border-b", "border-gray-200");
+        tr.innerHTML = `
+          <td class="border border-gray-300 px-4 py-2">${donation.id}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.user}</td>
+          <td class="border border-gray-300 px-4 py-2">${
+            donation.type.charAt(0).toUpperCase() + donation.type.slice(1)
+          }</td>
+          <td class="border border-gray-300 px-4 py-2">${
+            donation.type === "money"
+              ? donation.amount + " TZS"
+              : donation.goodsQuantity + " items"
+          }</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.charityCenter}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.status}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.date}</td>
+          <td class="border border-gray-300 px-4 py-2">
+            <select class="border border-gray-300 rounded-md p-1 w-full admin-status-select" data-donation-id="${
+              donation.id
+            }" aria-label="Update status for donation ${donation.id}">
+              <option value="Pending" ${
+                donation.status === "Pending" ? "selected" : ""
+              }>Pending</option>
+              <option value="Accepted" ${
+                donation.status === "Accepted" ? "selected" : ""
+              }>Accepted</option>
+              <option value="Rejected" ${
+                donation.status === "Rejected" ? "selected" : ""
+              }>Rejected</option>
+            </select>
+          </td>
+        `;
+        adminDonationsTableBody.appendChild(tr);
+      });
+    }
+
+    // Save admin donation updates
+    const saveDonationUpdatesBtn = document.getElementById("save-donation-updates");
+    saveDonationUpdatesBtn.addEventListener("click", () => {
+      const selects = document.querySelectorAll(".admin-status-select");
+      let updated = false;
+      selects.forEach((select) => {
+        const donationId = select.getAttribute("data-donation-id");
+        const donation = donations.find((d) => d.id === donationId);
+        if (donation && donation.status !== select.value) {
+          donation.status = select.value;
+          updated = true;
+        }
+      });
+      if (updated) {
+        adminUpdateConfirmation.textContent = "Donation statuses have been updated.";
+        adminUpdateConfirmation.classList.remove("hidden");
+        loadAdminDonations();
+        loadReports();
+        if (currentUser) {
+          loadUserDonations();
+        }
+      } else {
+        adminUpdateConfirmation.textContent = "No changes to update.";
+        adminUpdateConfirmation.classList.remove("hidden");
+      }
+      setTimeout(() => {
+        adminUpdateConfirmation.classList.add("hidden");
+      }, 4000);
+    });
+
+    // Register charity center form with image upload
+    const registerCharityCenterForm = document.getElementById("register-charity-center-form");
+    const registerCenterConfirmation = document.getElementById("register-center-confirmation");
+    const centerImageInput = document.getElementById("center-image");
+    const charityCenterImagePreview = document.getElementById("charity-center-image-preview");
+
+    // Preview image on file select
+    centerImageInput.addEventListener("change", () => {
+      const file = centerImageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          charityCenterImagePreview.src = e.target.result;
+          charityCenterImagePreview.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      } else {
+        charityCenterImagePreview.src = "#";
+        charityCenterImagePreview.classList.add("hidden");
+      }
+    });
+
+    registerCharityCenterForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = registerCharityCenterForm.centerName.value.trim();
+      const location = registerCharityCenterForm.centerLocation.value.trim();
+
+      if (!name || !location) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (charityCenters.find((c) => c.name.toLowerCase() === name.toLowerCase())) {
+        registerCenterConfirmation.textContent =
+          "Charity center with this name already exists.";
+        registerCenterConfirmation.classList.remove("hidden");
+        registerCenterConfirmation.classList.remove(
+          "bg-green-100",
+          "border-green-400",
+          "text-green-700"
+        );
+        registerCenterConfirmation.classList.add("bg-red-100", "border-red-400", "text-red-700");
+        return;
+      }
+
+      // Handle image upload (store as base64 string in memory)
+      let imageData = null;
+      const file = centerImageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          imageData = event.target.result;
+          charityCenters.push({
+            id: charityCenters.length + 1,
+            name,
+            location,
+            donations: [],
+            image: imageData,
+          });
+          registerCenterConfirmation.textContent = `Charity center "${name}" registered successfully.`;
+          registerCenterConfirmation.classList.remove("hidden");
+          registerCenterConfirmation.classList.remove(
+            "bg-red-100",
+            "border-red-400",
+            "text-red-700"
+          );
+          registerCenterConfirmation.classList.add("bg-green-100", "border-green-400", "text-green-700");
+          registerCharityCenterForm.reset();
+          charityCenterImagePreview.src = "#";
+          charityCenterImagePreview.classList.add("hidden");
+        };
+        reader.readAsDataURL(file);
+      } else {
+        charityCenters.push({
+          id: charityCenters.length + 1,
+          name,
+          location,
+          donations: [],
+          image: null,
+        });
+        registerCenterConfirmation.textContent = `Charity center "${name}" registered successfully.`;
+        registerCenterConfirmation.classList.remove("hidden");
+        registerCenterConfirmation.classList.remove(
+          "bg-red-100",
+          "border-red-400",
+          "text-red-700"
+        );
+        registerCenterConfirmation.classList.add("bg-green-100", "border-green-400", "text-green-700");
+        registerCharityCenterForm.reset();
+        charityCenterImagePreview.src = "#";
+        charityCenterImagePreview.classList.add("hidden");
+      }
+    });
+
+    // Load reports data
+    const reportsTableBody = document.getElementById("reports-table-body");
+    function loadReports() {
+      reportsTableBody.innerHTML = "";
+      if (donations.length === 0) {
+        reportsTableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">No donations found.</td></tr>`;
+        return;
+      }
+      donations.forEach((donation) => {
+        const tr = document.createElement("tr");
+        tr.classList.add("border-b", "border-gray-200");
+        tr.innerHTML = `
+          <td class="border border-gray-300 px-4 py-2">${donation.id}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.user}</td>
+          <td class="border border-gray-300 px-4 py-2">${
+            donation.type.charAt(0).toUpperCase() + donation.type.slice(1)
+          }</td>
+          <td class="border border-gray-300 px-4 py-2">${
+            donation.type === "money"
+              ? donation.amount.toLocaleString() + " TZS"
+              : donation.goodsQuantity + " " + donation.goodsDescription
+          }</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.charityCenter}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.status}</td>
+          <td class="border border-gray-300 px-4 py-2">${donation.date}</td>
+        `;
+        reportsTableBody.appendChild(tr);
+      });
+    }
+
+    // Initial load of reports
+    loadReports();
+  </script>
+ </body>
+</html>
